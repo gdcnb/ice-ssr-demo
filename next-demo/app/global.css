@@ -1,0 +1,11 @@
+/**
+ * 全局样式（对应原项目 src/global.css）
+ */
+:root {
+  --primary: #3178f6;
+  --bg-primary: white;
+}
+
+body {
+  margin: 0;
+}

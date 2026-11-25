@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# testing
+/coverage
+
+# production
+/build
+/dist
+.next/
+*.tsbuildinfo
+
+# misc
+.DS_Store
+*.swp
+*.dia~
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local env files
+.env
+.env*.local
+
+# tmp
+.ice
+
+# cache
+.eslintcache
+.stylelintcache
+
+# runtime
+logs/
+run/
+/server/logs
+/server/run
+/server/app/public

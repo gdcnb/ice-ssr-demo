@@ -1,0 +1,6 @@
+{
+  "name": "ice-ssr-egg-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Egg.js server hosting the ice.js SSR build output"
+}
