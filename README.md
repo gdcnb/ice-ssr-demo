@@ -204,6 +204,11 @@ curl -N -X POST http://127.0.0.1:7001/api/chat/stream \
 - **回放与实时流会重叠**：客户端按 seq 去重，避免同一事件上屏两次。
 - **多实例部署**：当前 turn 缓冲是进程内 `Map`；多 worker / 多机要换成 Redis（带 TTL）或做 sticky session，否则重连可能落到没有缓冲的实例。
 - **代理缓冲**：Egg 已设置 `X-Accel-Buffering: no` 并定期发 `: ping`，避免 nginx 缓冲或长连接被中间层掐断。
+- **打字节奏**：`src/lib/chat-typing.ts` 把网络帧放进队列再按时间片提交——文本 24ms/3 字、表格 34ms/2 字、公式 40ms/2 字、代码 48ms/1 字；代码块通过 ``` 围栏与常见声明识别，放慢节奏避免爆闪与频繁重渲染。
+- **光标跟随**：`src/pages/chat/index.tsx` 用独立绝对定位覆盖层做打字光标，在 `requestAnimationFrame` 里每帧最多读一次末尾 `Range` 位置，再用 `transform` 写回，避免逐帧强制同步布局。
+- **消息滚动**：只有用户已经贴底（误差 24px 内）时才自动滚到底；向上滚轮/触摸时立刻暂停自动滚动，并显示「回到底部」。用户看历史期间新内容追加在下方，视口位置保持不变。
+- **滚动防抖**：所有 `scrollTop` / `scrollHeight` 读取合并到一个 `requestAnimationFrame`，每帧只读一次；写操作也只在同一次 rAF 里进行，避免 Layout Thrashing。
+- **长消息**：气泡不限制高度，超长内容完整展开，由消息区统一滚动；光标定位与自动滚动只面对一个滚动容器，避免双层滚动带来的锚定复杂度。
 - **CSRF**：egg 默认对 POST 校验 CSRF token；本 demo 是无会话的 JSON 接口，在 `server/config/config.default.js` 里关掉了 `config.security.csrf`。
 
 ## 开发环境热更新

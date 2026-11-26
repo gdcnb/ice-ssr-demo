@@ -56,6 +56,15 @@
   flex: 1;
 }
 
+.pace {
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #51565d;
+  background: #f4f5f7;
+  white-space: nowrap;
+}
+
 .messages {
   display: flex;
   flex-direction: column;
@@ -63,10 +72,36 @@
   min-height: 280px;
   max-height: 52vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   padding: 18px;
   border: 1px solid #e5e6eb;
   border-radius: 10px;
   background: #fff;
+}
+
+.messages::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: #d9dce1;
+  border-radius: 3px;
+}
+
+.jumpBottom {
+  position: sticky;
+  bottom: 8px;
+  align-self: flex-end;
+  margin-top: -2px;
+  border: 1px solid #ffd591;
+  border-radius: 14px;
+  padding: 5px 12px;
+  background: #fff7e6;
+  color: #d46b08;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .empty {
@@ -106,6 +141,7 @@
 }
 
 .bubble {
+  position: relative;
   max-width: 76%;
   padding: 9px 13px;
   border-radius: 10px;
@@ -127,13 +163,15 @@
   border-top-left-radius: 2px;
 }
 
-.cursor {
-  display: inline-block;
-  width: 3px;
-  height: 15px;
-  margin-left: 2px;
-  vertical-align: -2px;
-  background: gray;
+.caret {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 16px;
+  background: #6b7280;
+  pointer-events: none;
+  will-change: transform;
   animation: blink 1s steps(1) infinite;
 }
 
